@@ -10,15 +10,19 @@ const ArtistQuestionScreen = (props) => {
   } = question;
 
   const artist = answers.map((answer, i) => {
+    const idName = `answer-${i}`;
+
+    const answerChange = (evt) => {
+      evt.preventDefault();
+      onAnswer(question, answer);
+    };
+
     return (
       <div key={answer.artist} className="artist">
-        <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`}
-          onChange={(evt) => {
-            evt.preventDefault();
-            onAnswer(question, answer);
-          }}
+        <input className="artist__input visually-hidden" type="radio" name="answer" value={idName} id={idName}
+          onChange={answerChange}
         />
-        <label className="artist__name" htmlFor={`answer-${i}`}>
+        <label className="artist__name" htmlFor={idName}>
           <img className="artist__picture" src={answer.picture} alt={answer.artist} />
           {answer.artist}
         </label>

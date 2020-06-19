@@ -6,12 +6,14 @@ import ArtistQuestionScreen from "../artist-question-screen/artist-question-scre
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
 import {GameType} from "../const.js";
 
+const START_STEP = -1;
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      step: -1,
+      step: START_STEP,
     };
   }
 
@@ -19,16 +21,22 @@ class App extends PureComponent {
     const {errorsCount, questions} = this.props;
     const {step} = this.state;
     const question = questions[step];
+    const welcomeButtonClick = () => {
+      this.setState({
+        step: 0,
+      });
+    };
+    const answer = () => {
+      this.setState((prevState) => ({
+        step: prevState.step + 1,
+      }));
+    };
 
-    if (step === -1 || step >= questions.length) {
+    if (step === START_STEP || step >= questions.length) {
       return (
         <WelcomeScreen
           errorsCount={errorsCount}
-          onWelcomeButtonClick={() => {
-            this.setState({
-              step: 0,
-            });
-          }}
+          onWelcomeButtonClick={welcomeButtonClick}
         />
       );
     }
@@ -39,27 +47,18 @@ class App extends PureComponent {
           return (
             <ArtistQuestionScreen
               question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
+              onAnswer={answer}
             />
           );
         case GameType.GENRE:
           return (
             <GenreQuestionScreen
               question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
+              onAnswer={answer}
             />
           );
       }
     }
-
     return null;
   }
 

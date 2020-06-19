@@ -12,7 +12,6 @@ class GenreQuestionScreen extends PureComponent {
     };
   }
 
-
   render() {
     const {onAnswer, question} = this.props;
     const {answers: userAnswers} = this.state;
@@ -21,7 +20,20 @@ class GenreQuestionScreen extends PureComponent {
       genre,
     } = question;
 
+    const formSubmit = (evt) => {
+      evt.preventDefault();
+      onAnswer(question, this.state.answers);
+    };
+
     const track = answers.map((answer, i) => {
+      const idName = `answer-${i}`;
+
+      const answerChange = (evt) => {
+        const value = evt.target.checked;
+        this.setState({
+          answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
+        });
+      };
 
       return (
         <div key={`${answer.src}-${i}`} className="track">
@@ -30,17 +42,11 @@ class GenreQuestionScreen extends PureComponent {
             <audio src={answer.src} />
           </div>
           <div className="game__answer">
-            <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`} id={`answer-${i}`}
+            <input className="game__input visually-hidden" type="checkbox" name="answer" value={idName} id={idName}
               checked={userAnswers[i]}
-              onChange={(evt) => {
-                const value = evt.target.checked;
-                this.setState({
-                  answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
-                });
-              }
-              }
+              onChange={answerChange}
             />
-            <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
+            <label className="game__check" htmlFor={idName}>Отметить</label>
           </div>
         </div>
       );
@@ -54,10 +60,7 @@ class GenreQuestionScreen extends PureComponent {
             <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию" />
           </a>
 
-          <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
-            {/* <circle className="timer__line" cx="390" cy="390" r="370"
-              style="filter: url(#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center" /> */}
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780" />
 
           <div className="game__mistakes">
             <div className="wrong"></div>
@@ -68,16 +71,8 @@ class GenreQuestionScreen extends PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
-          <form className="game__tracks"
-            onSubmit={(evt) => {
-              evt.preventDefault();
-              onAnswer(question, this.state.answers);
-            }
-            }
-          >
-
+          <form className="game__tracks" onSubmit={formSubmit}>
             {track}
-
             <button className="game__submit button" type="submit">Ответить</button>
           </form>
         </section>
