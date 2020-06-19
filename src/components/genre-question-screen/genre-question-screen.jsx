@@ -59,16 +59,13 @@ class GenreQuestionScreen extends PureComponent {
             <span className="visually-hidden">Сыграть ещё раз</span>
             <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию" />
           </a>
-
           <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780" />
-
           <div className="game__mistakes">
             <div className="wrong"></div>
             <div className="wrong"></div>
             <div className="wrong"></div>
           </div>
         </header>
-
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
           <form className="game__tracks" onSubmit={formSubmit}>
@@ -77,7 +74,6 @@ class GenreQuestionScreen extends PureComponent {
           </form>
         </section>
       </section>
-
     );
   }
 }
