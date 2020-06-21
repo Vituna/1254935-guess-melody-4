@@ -15,28 +15,32 @@ class App extends PureComponent {
     this.state = {
       step: START_STEP,
     };
+    this._handleWelcomeButtonClick = this._handleWelcomeButtonClick.bind(this);
+    this._handleAnswerChange = this._handleAnswerChange.bind(this);
+  }
+
+  _handleWelcomeButtonClick() {
+    this.setState({
+      step: 0,
+    });
+  }
+
+  _handleAnswerChange() {
+    this.setState((prevState) => ({
+      step: prevState.step + 1,
+    }));
   }
 
   _renderGameScreen() {
     const {errorsCount, questions} = this.props;
     const {step} = this.state;
     const question = questions[step];
-    const welcomeButtonClick = () => {
-      this.setState({
-        step: 0,
-      });
-    };
-    const answer = () => {
-      this.setState((prevState) => ({
-        step: prevState.step + 1,
-      }));
-    };
 
     if (step === START_STEP || step >= questions.length) {
       return (
         <WelcomeScreen
           errorsCount={errorsCount}
-          onWelcomeButtonClick={welcomeButtonClick}
+          onWelcomeButtonClick={this._handleWelcomeButtonClick}
         />
       );
     }
@@ -47,14 +51,14 @@ class App extends PureComponent {
           return (
             <ArtistQuestionScreen
               question={question}
-              onAnswer={answer}
+              onAnswer={this._handleAnswerChange}
             />
           );
         case GameType.GENRE:
           return (
             <GenreQuestionScreen
               question={question}
-              onAnswer={answer}
+              onAnswer={this._handleAnswerChange}
             />
           );
       }
