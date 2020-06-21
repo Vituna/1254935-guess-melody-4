@@ -19,16 +19,18 @@ class GenreQuestionScreen extends PureComponent {
     };
   }
 
-  _getTrack(answer, i, userAnswers) {
-    const idName = `answer-${i}`;
-    const nameKey = `${answer.src}-${i}`;
-
-    const answerChange = (evt) => {
+  _handleAnswerChange(userAnswers, i) {
+    return (evt) => {
       const value = evt.target.checked;
       this.setState({
         answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
       });
     };
+  }
+
+  _getTrack(answer, i, userAnswers) {
+    const idName = `answer-${i}`;
+    const nameKey = `${answer.src}-${i}`;
 
     return (
       <div key={nameKey} className="track">
@@ -39,7 +41,7 @@ class GenreQuestionScreen extends PureComponent {
         <div className="game__answer">
           <input className="game__input visually-hidden" type="checkbox" name="answer" value={idName} id={idName}
             checked={userAnswers[i]}
-            onChange={answerChange}
+            onChange={this._handleAnswerChange(userAnswers, i)}
           />
           <label className="game__check" htmlFor={idName}>Отметить</label>
         </div>
