@@ -30,19 +30,13 @@ const mock = {
   }
 };
 
-
 const mockEvent = {
   preventDefault() {}
 };
 
-
 it(`Click on user answer should pass to the callback data-object from which this answer was created`, () => {
   const {question} = mock;
   const onAnswer = jest.fn();
-  const userAnswer = {
-    artist: `one`,
-    picture: `pic-one`,
-  };
 
   const screen = shallow(<ArtistQuestionScreen
     onAnswer={onAnswer}
@@ -57,5 +51,5 @@ it(`Click on user answer should pass to the callback data-object from which this
   expect(onAnswer).toHaveBeenCalledTimes(1);
 
   expect(onAnswer.mock.calls[0][0]).toMatchObject(question);
-  expect(onAnswer.mock.calls[0][1]).toMatchObject(userAnswer);
+  expect(onAnswer.mock.calls[0][1]).toMatchObject(question);
 });
