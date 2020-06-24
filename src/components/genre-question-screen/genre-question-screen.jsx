@@ -28,16 +28,13 @@ class GenreQuestionScreen extends PureComponent {
     };
   }
 
-  _getTrack(answer, i, userAnswers) {
+  _getTrack(answer, i, userAnswers, renderPlayer) {
     const idName = `answer-${i}`;
     const nameKey = `${answer.src}-${i}`;
 
     return (
       <div key={nameKey} className="track">
-        <button className="track__button track__button--play" type="button"></button>
-        <div className="track__status">
-          <audio src={answer.src} />
-        </div>
+        {renderPlayer(answer.src, i)}
         <div className="game__answer">
           <input className="game__input visually-hidden" type="checkbox" name="answer" value={idName} id={idName}
             checked={userAnswers[i]}
@@ -49,39 +46,22 @@ class GenreQuestionScreen extends PureComponent {
     );
   }
 
-  _renderTracks(answers, userAnswers) {
-    return answers.map((answer, i) => this._getTrack(answer, i, userAnswers));
+  _renderTracks(answers, userAnswers, renderPlayer) {
+    return answers.map((answer, i) => this._getTrack(answer, i, userAnswers, renderPlayer));
   }
 
   render() {
-    const {onAnswer, question} = this.props;
+    const {onAnswer, question, renderPlayer} = this.props;
     const {answers: userAnswers} = this.state;
-    const {
-      answers,
-      genre,
-    } = question;
+    const {answers, genre} = question;
 
     return (
-      <section className="game game--genre">
-        <header className="game__header">
-          <a className="game__back" href="#">
-            <span className="visually-hidden">Сыграть ещё раз</span>
-            <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию" />
-          </a>
-          <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780" />
-          <div className="game__mistakes">
-            <div className="wrong"></div>
-            <div className="wrong"></div>
-            <div className="wrong"></div>
-          </div>
-        </header>
-        <section className="game__screen">
-          <h2 className="game__title">Выберите {genre} треки</h2>
-          <form className="game__tracks" onSubmit={this._handleFormSubmit(onAnswer, question)}>
-            {this._renderTracks(answers, userAnswers)}
-            <button className="game__submit button" type="submit">Ответить</button>
-          </form>
-        </section>
+      <section className="game__screen">
+        <h2 className="game__title">Выберите {genre} треки</h2>
+        <form className="game__tracks" onSubmit={this._handleFormSubmit(onAnswer, question)}>
+          {this._renderTracks(answers, userAnswers, renderPlayer)}
+          <button className="game__submit button" type="submit">Ответить</button>
+        </form>
       </section>
     );
   }
@@ -97,6 +77,7 @@ GenreQuestionScreen.propTypes = {
     genre: PropTypes.string.isRequired,
     type: PropTypes.oneOf([GameType.ARTIST, GameType.GENRE]).isRequired,
   }).isRequired,
+  renderPlayer: PropTypes.func.isRequired,
 };
 
 export default GenreQuestionScreen;
