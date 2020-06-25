@@ -30,9 +30,7 @@ const ArtistQuestionScreen = (props) => {
     );
   };
 
-  const renderArtists = () => {
-    return answers.map(getArtist);
-  };
+  const renderArtists = () => answers.map(getArtist);
 
   return (
     <section className="game__screen">

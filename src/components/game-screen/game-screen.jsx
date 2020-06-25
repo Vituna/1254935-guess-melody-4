@@ -5,8 +5,7 @@ import {GameType} from "../const.js";
 
 const style = {filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`};
 
-const GameScreen = (props) => {
-  const {type, children} = props;
+const GameScreen = ({type, children}) => {
 
   return (
     <section className={`game game--${type}`}>
