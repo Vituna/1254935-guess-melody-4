@@ -16,31 +16,9 @@ const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 
 class App extends PureComponent {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     step: START_STEP,
-  //   };
-  //   this._handleWelcomeButtonClick = this._handleWelcomeButtonClick.bind(this);
-  //   this._handleAnswerChange = this._handleAnswerChange.bind(this);
-  // }
-
-  // _handleWelcomeButtonClick() {
-  //   this.setState({
-  //     step: 0,
-  //   });
-  // }
-
-  // _handleAnswerChange() {
-  //   this.setState((prevState) => ({
-  //     step: prevState.step + 1,
-  //   }));
-  // }
 
   _renderGameScreen() {
     const {maxMistakes, questions, onUserAnswer, onWelcomeButtonClick, step} = this.props;
-    // const {step} = this.state;
     const question = questions[step];
 
     if (step === START_STEP || step >= questions.length) {

@@ -19,7 +19,7 @@ const ArtistQuestionScreen = ({onAnswer, question, renderPlayer}) => {
     return (
       <div key={answer.artist} className="artist">
         <input className="artist__input visually-hidden" type="radio" name="answer" value={idName} id={idName}
-          onChange={handleAnswerChange(question, answer)}
+          onChange={handleAnswerChange(answer)}
         />
         <label className="artist__name" htmlFor={idName}>
           <img className="artist__picture" src={answer.picture} alt={answer.artist} />
