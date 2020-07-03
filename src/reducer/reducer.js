@@ -40,7 +40,6 @@ const ActionCreator = {
         answerIsCorrect = isGenreAnswerCorrect(question, userAnswer);
         break;
     }
-
     return {
       type: ActionType.INCREMENT_MISTAKES,
       payload: answerIsCorrect ? 0 : 1,
@@ -48,7 +47,7 @@ const ActionCreator = {
   },
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = extend(initialState), action) => {
   switch (action.type) {
     case ActionType.INCREMENT_STEP:
       let nextStep = state.step + action.payload;
