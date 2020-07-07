@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 
 import {GameType} from "../const.js";
 
-const ArtistQuestionScreen = (props) => {
-  const {onAnswer, question, renderPlayer} = props;
+const ArtistQuestionScreen = ({onAnswer, question, renderPlayer}) => {
   const {answers, song} = question;
 
   const handleAnswerChange = (answer) => {
@@ -20,7 +19,7 @@ const ArtistQuestionScreen = (props) => {
     return (
       <div key={answer.artist} className="artist">
         <input className="artist__input visually-hidden" type="radio" name="answer" value={idName} id={idName}
-          onChange={handleAnswerChange(question, answer)}
+          onChange={handleAnswerChange(answer)}
         />
         <label className="artist__name" htmlFor={idName}>
           <img className="artist__picture" src={answer.picture} alt={answer.artist} />
