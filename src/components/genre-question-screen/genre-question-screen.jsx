@@ -1,65 +1,56 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
+import GenreQuestionItem from "../genre-question-item/genre-question-item.jsx";
 import {GameType} from "../const.js";
 
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      answers: [false, false, false, false],
-    };
+    this._getTrack = this._getTrack.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
-  _handleFormSubmit(onAnswer, question) {
-    return (evt) => {
-      evt.preventDefault();
-      onAnswer(question, this.state.answers);
-    };
-  }
-
-  _handleAnswerChange(userAnswers, i) {
-    return (evt) => {
-      const value = evt.target.checked;
-      this.setState({
-        answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
-      });
-    };
-  }
-
-  _getTrack(answer, i, userAnswers, renderPlayer) {
-    const idName = `answer-${i}`;
-    const nameKey = `${answer.src}-${i}`;
+  _getTrack(answer, i) {
+    const {renderPlayer, userAnswers, onChange} = this.props;
+    const key = `${i}-${answer.src}`;
 
     return (
-      <div key={nameKey} className="track">
-        {renderPlayer(answer.src, i)}
-        <div className="game__answer">
-          <input className="game__input visually-hidden" type="checkbox" name="answer" value={idName} id={idName}
-            checked={userAnswers[i]}
-            onChange={this._handleAnswerChange(userAnswers, i)}
-          />
-          <label className="game__check" htmlFor={idName}>Отметить</label>
-        </div>
-      </div>
+      <GenreQuestionItem
+        answer={answer}
+        id={i}
+        key={key}
+        onChange={onChange}
+        renderPlayer={renderPlayer}
+        userAnswer={userAnswers[i]}
+      />
     );
   }
 
-  _renderTracks(answers, userAnswers, renderPlayer) {
-    return answers.map((answer, i) => this._getTrack(answer, i, userAnswers, renderPlayer));
+  _renderTracks(answers) {
+    return answers.map(this._getTrack);
+  }
+
+  _handleSubmit(evt) {
+    const {onAnswer} = this.props;
+
+    evt.preventDefault();
+    onAnswer();
   }
 
   render() {
-    const {onAnswer, question, renderPlayer} = this.props;
-    const {answers: userAnswers} = this.state;
+    const {question} = this.props;
     const {answers, genre} = question;
 
     return (
       <section className="game__screen">
         <h2 className="game__title">Выберите {genre} треки</h2>
-        <form className="game__tracks" onSubmit={this._handleFormSubmit(onAnswer, question)}>
-          {this._renderTracks(answers, userAnswers, renderPlayer)}
+        <form
+          className="game__tracks"
+          onSubmit={this._handleSubmit}
+        >
+          {this._renderTracks(answers)}
           <button className="game__submit button" type="submit">Ответить</button>
         </form>
       </section>
@@ -69,6 +60,7 @@ class GenreQuestionScreen extends PureComponent {
 
 GenreQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   question: PropTypes.shape({
     answers: PropTypes.arrayOf(PropTypes.shape({
       src: PropTypes.string.isRequired,
@@ -78,6 +70,8 @@ GenreQuestionScreen.propTypes = {
     type: PropTypes.oneOf([GameType.ARTIST, GameType.GENRE]).isRequired,
   }).isRequired,
   renderPlayer: PropTypes.func.isRequired,
+  userAnswers: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };
+
 
 export default GenreQuestionScreen;
