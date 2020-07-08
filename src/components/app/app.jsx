@@ -18,28 +18,6 @@ const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestion
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      step: START_STEP,
-    };
-
-    this._handleWelcomeButtonClick = this._handleWelcomeButtonClick.bind(this);
-    this._handleScreenChange = this._handleScreenChange.bind(this);
-  }
-
-  _handleWelcomeButtonClick() {
-    this.setState({
-      step: 0,
-    });
-  }
-
-  _handleScreenChange() {
-    this.setState((prevState) => ({
-      step: prevState.step + 1,
-    }));
-  }
 
   _renderGameScreen() {
     const {
