@@ -1,46 +1,37 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import GenreQuestionItem from "../genre-question-item/genre-question-item.jsx";
 import {GameType} from "../const.js";
 
-class GenreQuestionScreen extends PureComponent {
-  constructor(props) {
-    super(props);
+const GenreQuestionScreen = ({renderPlayer, userAnswers, onChange, onAnswer, question}) => {
 
-    this._getTrack = this._getTrack.bind(this);
-    this._handleSubmit = this._handleSubmit.bind(this);
-  }
+  const renderGenreQuestionScreen = () => {
 
-  _getTrack(answer, i) {
-    const {renderPlayer, userAnswers, onChange} = this.props;
-    const key = `${i}-${answer.src}`;
+    const getTrack = (answer, i) => {
+      const key = `${i}-${answer.src}`;
 
-    return (
-      <GenreQuestionItem
-        answer={answer}
-        id={i}
-        key={key}
-        onChange={onChange}
-        renderPlayer={renderPlayer}
-        userAnswer={userAnswers[i]}
-      />
-    );
-  }
+      return (
+        <GenreQuestionItem
+          answer={answer}
+          id={i}
+          key={key}
+          onChange={onChange}
+          renderPlayer={renderPlayer}
+          userAnswer={userAnswers[i]}
+        />
+      );
+    };
 
-  _renderTracks(answers) {
-    return answers.map(this._getTrack);
-  }
+    const renderTracks = (answers) => {
+      return answers.map(getTrack);
+    };
 
-  _handleSubmit(evt) {
-    const {onAnswer} = this.props;
+    const handleSubmit = (evt) => {
+      evt.preventDefault();
+      onAnswer();
+    };
 
-    evt.preventDefault();
-    onAnswer();
-  }
-
-  render() {
-    const {question} = this.props;
     const {answers, genre} = question;
 
     return (
@@ -48,15 +39,17 @@ class GenreQuestionScreen extends PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form
           className="game__tracks"
-          onSubmit={this._handleSubmit}
+          onSubmit={handleSubmit}
         >
-          {this._renderTracks(answers)}
+          {renderTracks(answers)}
           <button className="game__submit button" type="submit">Ответить</button>
         </form>
       </section>
     );
-  }
-}
+  };
+
+  return renderGenreQuestionScreen();
+};
 
 GenreQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,

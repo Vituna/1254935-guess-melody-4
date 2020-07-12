@@ -1,23 +1,14 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
+const GenreQuestionItem = ({answer, id, renderPlayer, userAnswer, onChange}) => {
+  const renderGenreQuestionItem = () => {
 
-class GenreQuestionItem extends PureComponent {
-  constructor(props) {
-    super(props);
+    const handleChande = (evt) => {
+      const value = evt.target.checked;
+      onChange(id, value);
+    };
 
-    this.handleChande = this.handleChande.bind(this);
-  }
-
-  handleChande(evt) {
-    const {id, onChange} = this.props;
-    const value = evt.target.checked;
-
-    onChange(id, value);
-  }
-
-  render() {
-    const {answer, id, renderPlayer, userAnswer} = this.props;
     const answerId = `answer-${id}`;
 
     return (
@@ -27,14 +18,16 @@ class GenreQuestionItem extends PureComponent {
           <input className="game__input visually-hidden" type="checkbox" name="answer" value={answerId}
             id={answerId}
             checked={userAnswer}
-            onChange={this.handleChande}
+            onChange={handleChande}
           />
           <label className="game__check" htmlFor={answerId}>Отметить</label>
         </div>
       </div>
     );
-  }
-}
+  };
+
+  return renderGenreQuestionItem();
+};
 
 GenreQuestionItem.propTypes = {
   answer: PropTypes.shape({
@@ -47,6 +40,4 @@ GenreQuestionItem.propTypes = {
   userAnswer: PropTypes.bool.isRequired,
 };
 
-
 export default GenreQuestionItem;
-

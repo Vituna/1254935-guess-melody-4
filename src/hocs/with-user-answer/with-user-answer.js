@@ -12,26 +12,8 @@ const withUserAnswer = (Component) => {
         answers: new Array(props.question.answers.length).fill(false),
       };
 
-      this.handleAnswer = this.handleAnswer.bind(this);
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleAnswer() {
-      const {onAnswer, question} = this.props;
-      const {answers} = this.state;
-
-      onAnswer(question, answers);
-    }
-
-    handleChange(i, value) {
-      const {answers} = this.state;
-
-      const userAnswers = answers.slice(0);
-      userAnswers[i] = value;
-
-      this.setState({
-        answers: userAnswers,
-      });
+      this.handleAnswer = this._handleAnswer.bind(this);
+      this.handleChange = this._handleChange.bind(this);
     }
 
     render() {
@@ -46,6 +28,25 @@ const withUserAnswer = (Component) => {
         />
       );
     }
+
+    _handleAnswer() {
+      const {onAnswer, question} = this.props;
+      const {answers} = this.state;
+
+      onAnswer(question, answers);
+    }
+
+    _handleChange(i, value) {
+      const {answers} = this.state;
+
+      const userAnswers = answers.slice(0);
+      userAnswers[i] = value;
+
+      this.setState({
+        answers: userAnswers,
+      });
+    }
+
   }
 
   WithUserAnswer.propTypes = {

@@ -1,27 +1,25 @@
-import React, {PureComponent, Fragment} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-export default class AudioPlayer extends PureComponent {
+const AudioPlayer = ({isLoading, isPlaying, onPlayButtonClick, children}) => {
 
-  render() {
-    const {isLoading, isPlaying, onPlayButtonClick, children} = this.props;
-    const classButtonDefinition = `track__button track__button--${isPlaying ? `pause` : `play`}`;
+  const classButtonDefinition = `track__button track__button--${isPlaying ? `pause` : `play`}`;
 
-    return (
-      <Fragment>
-        <button
-          className={classButtonDefinition}
-          type="button"
-          disabled={isLoading}
-          onClick={onPlayButtonClick}
-        />
-        <div className="track__status">
-          {children}
-        </div>
-      </Fragment>
-    );
-  }
-}
+  return (
+    <>
+      <button
+        className={classButtonDefinition}
+        type="button"
+        disabled={isLoading}
+        onClick={onPlayButtonClick}
+      />
+      <div className="track__status">
+        {children}
+      </div>
+      </>
+  );
+
+};
 
 AudioPlayer.propTypes = {
   isLoading: PropTypes.bool.isRequired,
@@ -32,3 +30,5 @@ AudioPlayer.propTypes = {
     PropTypes.node
   ]).isRequired,
 };
+
+export default AudioPlayer;

@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer/reducer.js";
 
-const WinScreen = ({questionsCount, mistakesCount, onReplayButtonClick}) => {
+const WinScreen = ({questions, mistakes, resetGame}) => {
+
+  const questionsCount = questions.length;
+  const mistakesCount = mistakes;
+  const onReplayButtonClick = resetGame;
+
   const correctlyQuestionsCount = questionsCount - mistakesCount;
 
   return (
@@ -23,9 +30,21 @@ const WinScreen = ({questionsCount, mistakesCount, onReplayButtonClick}) => {
 };
 
 WinScreen.propTypes = {
-  questionsCount: PropTypes.number.isRequired,
-  mistakesCount: PropTypes.number.isRequired,
-  onReplayButtonClick: PropTypes.func.isRequired,
+  questions: PropTypes.array.isRequired,
+  mistakes: PropTypes.number.isRequired,
+  resetGame: PropTypes.func.isRequired,
 };
 
-export default WinScreen;
+const mapStateToProps = (state) => ({
+  mistakes: state.mistakes,
+  questions: state.questions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetGame() {
+    dispatch(ActionCreator.resetGame());
+  },
+});
+
+export {WinScreen};
+export default connect(mapStateToProps, mapDispatchToProps)(WinScreen);
