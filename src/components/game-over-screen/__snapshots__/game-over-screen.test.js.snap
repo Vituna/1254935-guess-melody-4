@@ -26,11 +26,7 @@ exports[`Should GameOverScreen render correctly 1`] = `
   </p>
   <button
     className="replay"
-    onClick={
-      Object {
-        "onReplayButtonClick": [Function],
-      }
-    }
+    onClick={[Function]}
     type="button"
   >
     Попробовать ещё раз

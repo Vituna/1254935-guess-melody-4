@@ -126,19 +126,15 @@ describe(`Render App`, () => {
 it(`Render GameOverScreen`, () => {
   const store = mockStore({
     mistakes: 3,
+    questions,
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
           <App
-            maxMistakes={3}
-            mistakes={3}
-            questions={questions}
             resetGame={() => {}}
-            onUserAnswer={() => {}}
-            onWelcomeButtonClick={() => {}}
-            step={1}
+            questions={questions}
           />
         </Provider>, {
           createNodeMock: () => {
@@ -153,6 +149,7 @@ it(`Render GameOverScreen`, () => {
 it(`Render WinScreen`, () => {
   const store = mockStore({
     mistakes: 3,
+    questions,
   });
 
   const tree = renderer
@@ -163,8 +160,6 @@ it(`Render WinScreen`, () => {
             mistakes={0}
             questions={questions}
             resetGame={() => {}}
-            onUserAnswer={() => {}}
-            onWelcomeButtonClick={() => {}}
             step={3}
           />
         </Provider>, {

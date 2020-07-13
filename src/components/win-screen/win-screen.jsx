@@ -30,9 +30,9 @@ const WinScreen = ({questions, mistakes, resetGame}) => {
 };
 
 WinScreen.propTypes = {
-  questions: PropTypes.array.isRequired,
-  mistakes: PropTypes.number.isRequired,
-  resetGame: PropTypes.func.isRequired,
+  questions: PropTypes.array,
+  mistakes: PropTypes.number,
+  resetGame: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

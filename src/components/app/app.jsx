@@ -111,12 +111,12 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  maxMistakes: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number,
   questions: PropTypes.array.isRequired,
-  onUserAnswer: PropTypes.func.isRequired,
-  onWelcomeButtonClick: PropTypes.func.isRequired,
-  step: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired,
+  onUserAnswer: PropTypes.func,
+  onWelcomeButtonClick: PropTypes.func,
+  step: PropTypes.number,
+  mistakes: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
